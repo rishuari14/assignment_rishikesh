@@ -1,12 +1,11 @@
 import React from "react";
 import "./ProfileCard.css";
-import avatar from "../images/image-rita.png";
 
 function ProfileCard(props) {
 	return (
 		<div className="card-container">
 			<header>
-				<img src={avatar} alt={props.name} />
+				<img src={props.image} alt={"loading"} />
 			</header>
 			<h1 className="bold-text">
 				{props.name} <span className="normal-text">{props.age}</span>

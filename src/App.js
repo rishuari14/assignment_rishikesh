@@ -6,11 +6,13 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import loader from "./images/loader.gif";
 import { GET_USER_URL } from "./utility/url";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 
 function App() {
     const [user,setUser] = useState([]);
 	const [loading,setLoading] = useState(false)
+	const [items, setItems] = useState([]);
 
     //SETTING UP API CALL
 
@@ -27,6 +29,7 @@ function App() {
 			const response = await axios(config);
 			console.log(response.data.results)
 			setUser(response.data.results[0]);
+			localStorage.setItem('items', JSON.stringify(items));
 		   
 		  }
 		   catch (err) {
@@ -67,14 +70,15 @@ function App() {
 			<div className="bg-pattern-bottom"></div>
 
 			<ProfileCard
+	            image = {user.picture && user.picture.large ? user.picture.large :"Not Available"}
 				name= {user.name && user.name.first ? user.name.first +' '+ user.name.last  :"Not Available"}
 				age= {user.dob && user.dob.age ? user.dob.age  :"Not Available"}
-				email={user.location && user.location.city ? user.location.city  :"Not Available"}
+				email={user.email ? user.email  :"Not Available"}
 				city={user.location && user.location.city ? user.location.city  :"Not Available"}
 				country={user.location && user.location.country ? user.location.country  :"Not Available"}
 				postcode={user.location && user.location.postcode ? user.location.postcode  :"Not Available"}
 			></ProfileCard>
-		 <Button variant="contained" disabled ={loading ? true : false} onClick={()=> {getRowdata();setLoading(true)} } >Next User</Button>
+		 <Button variant="contained" endIcon={<NavigateNextIcon />} disabled ={loading ? true : false} onClick={()=> {getRowdata();setLoading(true)} } >Next User</Button>
 		</div>
 	);
 }
